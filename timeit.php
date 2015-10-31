@@ -30,14 +30,14 @@ function timeit($code, $rounds = NULL)
 
      $true_rounds = $rounds ? $rounds : 10;
 
-     $start = microtime(TRUE);
-
+     $delta = 0;
      while (TRUE)
      {
+          $start = microtime(TRUE);
           for ($i = 0; $i < $true_rounds; $i++)
                eval($code);
           $end = microtime(TRUE);
-          $delta = $end - $start;
+          $delta += $end - $start;
           if ($rounds || $delta > 0.5)
                break;
           $true_rounds *= 10;
