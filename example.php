@@ -6,7 +6,7 @@ const TEST_STRING = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaX';
 
 function f1()
 {
-    strpos('X', TEST_STRING);
+    strpos(TEST_STRING, 'X');
 }
 
 function f2()
