@@ -55,8 +55,10 @@ function timeit($code, $rounds = NULL)
      return array($true_rounds, $time, $delta_str);
 }
 
-function print_timeit($code, $rounds = NULL)
+function print_timeit($code, $rounds = NULL, $label = NULL)
 {
     $result = timeit($code, $rounds);
-    print "$code: $result[0] loops: $result[2] per loop\n";
+    if (!$label)
+        $label = $code;
+    print "$label: $result[0] loops: $result[2] per loop\n";
 }
