@@ -22,6 +22,11 @@
  *
  *  print_r(timeit('$str = "12345"; $res = substr($str, 0, 1) == "X";'));
  *  print_r(timeit('$str = "12345"; $res = $str[0] == "X";'));
+ *
+ * You can also use print_timeit() as a convenient way to print the
+ * results:
+ *
+ *  print_timeit('strpos("abc", "a")');
  */
 function timeit($code, $rounds = NULL)
 {
