@@ -18,5 +18,5 @@ function f2()
             break;
 }
 
-print_r(timeit('f1()'));
-print_r(timeit('f2()'));
+print_timeit('f1()');
+print_timeit('f2()');
