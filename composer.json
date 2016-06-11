@@ -1,0 +1,20 @@
+{
+    "name": "flaviovs/timeit",
+    "description": "Library and tools to measure execution speed of PHP code",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Flávio Veloso",
+            "email": "flaviovs@magnux.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.4"
+    },
+	"autoload": {
+		"psr-4": {
+			"TimeIt\\": "src/"
+		},
+		"files": ["src/functions.php"]
+	}
+}
