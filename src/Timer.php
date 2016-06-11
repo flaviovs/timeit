@@ -12,9 +12,9 @@ class Timer {
 
 	public function __construct($code, $setup = NULL) {
 		$this->code = (is_callable($code) ?
-					   $code : function() { eval("$code;"); });
-		$this->setup = ($code === NULL || is_callable($code) ?
-						$setup : function() { eval("$setup;"); });
+		               $code : function() { eval("$code;"); });
+		$this->setup = ($setup === NULL || is_callable($setup) ?
+		                $setup : function() { eval("$setup;"); });
 	}
 
 	public function timeit($rounds = NULL)
