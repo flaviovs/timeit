@@ -28,6 +28,8 @@ class Timer {
 			$code();
 		}
 
+		$code = $this->code;
+
 		while (TRUE)
 		{
 			$start = microtime(TRUE);
