@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright (c) 2015-2016 Flávio Veloso
+ * License: Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
+ */
 
 class FunctionsTestcase extends PHPUnit_Framework_TestCase {
 

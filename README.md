@@ -171,3 +171,16 @@ measuring on two different computers, nor if you do measurements on
 the same computer at different times. For example, measuring the same
 code on a server under heavy I/O and in quiet times will probably not
 give you the same results.
+
+
+Legal
+-----
+
+Copyright 2015-2016 Flávio Veloso
+
+This package is licensed under the Apache License version 2.0. See
+the file LICENSE for more details.
+
+If you find bugs in this software, please open an issue on GitHub at
+https://github.com/flaviovs/timeit, or send it to me at flaviovs at
+magnux dot com.

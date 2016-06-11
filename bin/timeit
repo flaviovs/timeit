@@ -1,5 +1,9 @@
 #!/usr/bin/env php
 <?php
+/*
+ * Copyright (c) 2015-2016 Flávio Veloso
+ * License: Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
+ */
 
 foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php']
          as $autoload_php) {
