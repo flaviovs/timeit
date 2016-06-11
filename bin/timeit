@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php']
+         as $autoload_php) {
+	if (file_exists($autoload_php)) {
+		require $autoload_php;
+		break;
+	}
+}
+
+if ($argc == 1) {
+	error_log("Usage: timeit CODE [MORE-CORE...]");
+	exit(1);
+}
+
+for ($i = 1; $i < $argc; $i++) {
+	print timeit_str($argv[$i]) . "\n";
+}

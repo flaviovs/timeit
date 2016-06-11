@@ -8,6 +8,7 @@
             "email": "flaviovs@magnux.com"
         }
     ],
+	"bin": ["bin/timeit"],
     "require": {
         "php": ">= 5.4"
     },
