@@ -24,5 +24,7 @@ function timeit_str($code, $setup = NULL, $rounds = NULL,
 	// Get the actual number of repetitions.
 	$repeat = count($results);
 
-	return "$label: $results[0] loops, best of $repeat: $results[2] per loop";
+	$best = $results[0];
+
+	return "$label: $best[0] loops, best of $repeat: $best[2] per loop";
 }
