@@ -22,10 +22,16 @@ class Timer {
 	}
 
 	static protected function timeExec(callable $code, $rounds) {
+		$gc_enabled = gc_enabled();
+		if ($gc_enabled)
+			gc_disable();
 		$start = microtime(TRUE);
 		for ($i = 0; $i < $rounds; $i++)
 			$code();
-		return microtime(TRUE) - $start;
+		$end = microtime(TRUE);
+		if ($gc_enabled)
+			gc_enable();
+		return $end - $start;
 	}
 
 	public function __construct($code, $setup = NULL) {
