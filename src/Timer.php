@@ -24,7 +24,8 @@ class Timer {
 		$delta = 0;
 
 		if ($this->setup) {
-			$this->$setup();
+			$code = $this->setup();
+			$code();
 		}
 
 		while (TRUE)
