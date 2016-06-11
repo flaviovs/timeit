@@ -16,5 +16,8 @@
 			"TimeIt\\": "src/"
 		},
 		"files": ["src/functions.php"]
-	}
+	},
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
 }
