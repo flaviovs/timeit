@@ -7,20 +7,25 @@ namespace TimeIt;
 
 class Timer {
 
+	const OVERHEAD_ITERATIONS = 1e5;
+
 	static protected $loopOverhead;
 
 	protected $code;
 	protected $setup;
 
 	static protected function initLoopOverhead() {
-		$empty = '';
-		$code = function() use ($empty) { eval("$empty;"); };
-		$iterations = 1e5;
+		$code = '';
+		static::$loopOverhead = static::timeExec(function() use ($code) {
+				eval("$code;");
+			}, static::OVERHEAD_ITERATIONS) / static::OVERHEAD_ITERATIONS;
+	}
+
+	static protected function timeExec(callable $code, $rounds) {
 		$start = microtime(TRUE);
-		for ($i = 0; $i < $iterations; $i++)
+		for ($i = 0; $i < $rounds; $i++)
 			$code();
-		$end = microtime(TRUE);
-		static::$loopOverhead = ($end - $start) / ($i - 1);
+		return microtime(TRUE) - $start;
 	}
 
 	public function __construct($code, $setup = NULL) {
@@ -49,11 +54,8 @@ class Timer {
 
 		while (TRUE)
 		{
-			$start = microtime(TRUE);
-			for ($i = 0; $i < $true_rounds; $i++)
-				$code();
-			$end = microtime(TRUE);
-			$delta += ($end - $start) - ($true_rounds * static::$loopOverhead);
+			$delta += static::timeExec($code, $true_rounds)
+				- ($true_rounds * static::$loopOverhead);
 			if ($rounds || $delta > 0.5)
 				break;
 			$true_rounds *= 10;
