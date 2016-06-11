@@ -15,5 +15,6 @@ if ($argc == 1) {
 }
 
 for ($i = 1; $i < $argc; $i++) {
+	print "$argv[$i]: ";
 	print timeit_str($argv[$i]) . "\n";
 }

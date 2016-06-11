@@ -16,7 +16,7 @@ class FunctionsTestcase extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTimeItStr() {
-		$this->assertRegExp('/^: 10 loops, best of 3: \d\d\.\d\d\S+ per loop$/',
+		$this->assertRegExp('/10 loops, best of 3: \d\d\.\d\d\S+ per loop$/',
 		                    timeit_str('', NULL, 10));
 	}
 }

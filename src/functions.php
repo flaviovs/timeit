@@ -14,11 +14,7 @@ function timeit_repeat($code, $setup = NULL, $rounds = NULL, $repeat = 3) {
 	return $timer->repeat($rounds, $repeat);
 }
 
-function timeit_str($code, $setup = NULL, $rounds = NULL,
-                      $repeat = 3, $label = NULL) {
-	if (!$label)
-		$label = $code;
-
+function timeit_str($code, $setup = NULL, $rounds = NULL, $repeat = 3) {
 	$results = timeit_repeat($code, $setup, $rounds, $repeat);
 
 	// Get the actual number of repetitions.
@@ -26,5 +22,5 @@ function timeit_str($code, $setup = NULL, $rounds = NULL,
 
 	$best = $results[0];
 
-	return "$label: $best[0] loops, best of $repeat: $best[2] per loop";
+	return "$best[0] loops, best of $repeat: $best[2] per loop";
 }
