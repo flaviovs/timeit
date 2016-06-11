@@ -58,10 +58,11 @@ class Timer {
 
 		$code = $this->code;
 
-		while (TRUE)
+		while ($true_rounds < 1e7)
 		{
-			$delta += static::timeExec($code, $true_rounds)
-				- ($true_rounds * static::$loopOverhead);
+			$delta += max(1e-6,
+			              static::timeExec($code, $true_rounds)
+			              - ($true_rounds * static::$loopOverhead));
 			if ($rounds || $delta > 0.5)
 				break;
 			$true_rounds *= 10;
