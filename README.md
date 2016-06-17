@@ -128,18 +128,18 @@ Example:
     $ bin/timeit 'pow(5, 5)'
     pow(5, 5): 100000 loops, best of 3: 9.21us per loop
 
-    $ bin/timeit 'pow(2, 5)' '5 * 5 * 5 * 5 * 5'
+    $ bin/timeit 'pow(2, 5)' '2 * 2 * 2 * 2 * 2'
     pow(2, 5): 100000 loops, best of 3: 8.51us per loop
     5 * 5 * 5 * 5 * 5: 1000000 loops, best of 3: 4.10us per loop
 
 **Warning**: you must be extra careful when passing PHP code in the
-command line to the `timeit` script. That's because single/double
-quotes, that are often used in PHP code, may clash with the ones used
-by your shell. The script expect that each separate parameter contains
-a single piece of code, but if you do not escape your quotes properly,
-the shell may divide the parameter in unexpected ways. You probably
-need to escape dollar signs as well, to prevent them to be interpreted
-by the shell.
+command line to the `timeit` script, because single/double quotes --
+very often used in PHP code -- may clash with the ones expected by
+your shell. The script expect that each separate shell parameter
+contains a single piece of code, but if you do not escape your quotes
+properly, the shell may divide the parameter in unexpected ways. You
+probably need to escape dollar signs as well, to prevent them to be
+interpreted by the shell.
 
 Examples:
 
