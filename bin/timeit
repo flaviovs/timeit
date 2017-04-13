@@ -14,7 +14,7 @@ foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php']
 }
 
 if ($argc == 1) {
-	error_log("Usage: timeit CODE [MORE-CORE...]");
+	error_log("Usage: timeit CODE [MORE-CODE...]");
 	exit(1);
 }
 
