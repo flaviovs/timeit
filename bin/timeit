@@ -18,6 +18,10 @@ if ($argc == 1) {
 	exit(1);
 }
 
+if (!function_exists('timeit')) {
+	require __DIR__ . '/../src/functions.php';
+}
+
 for ($i = 1; $i < $argc; $i++) {
 	print "$argv[$i]: ";
 	print timeit_str($argv[$i]) . "\n";
