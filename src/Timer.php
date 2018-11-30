@@ -5,100 +5,117 @@
  */
 namespace TimeIt;
 
-class Timer {
+class Timer
+{
 
-	const OVERHEAD_ITERATIONS = 1e5;
+    const OVERHEAD_ITERATIONS = 1e5;
 
-	static protected $loopOverhead;
+    static protected $loopOverhead;
 
-	protected $code;
-	protected $setup;
+    protected $code;
+    protected $setup;
 
-	static protected function initLoopOverhead() {
-		$code = '';
-		static::$loopOverhead = static::timeExec(function() use ($code) {
-				eval("$code;");
-			}, static::OVERHEAD_ITERATIONS) / static::OVERHEAD_ITERATIONS;
-	}
+    protected static function initLoopOverhead()
+    {
+        $code = '';
+        static::$loopOverhead = static::timeExec(function () use ($code) {
+                eval("$code;");
+        }, static::OVERHEAD_ITERATIONS) / static::OVERHEAD_ITERATIONS;
+    }
 
-	static protected function timeExec(callable $code, $rounds) {
-		$gc_enabled = gc_enabled();
-		if ($gc_enabled)
-			gc_disable();
-		$start = microtime(TRUE);
-		for ($i = 0; $i < $rounds; $i++)
-			$code();
-		$end = microtime(TRUE);
-		if ($gc_enabled)
-			gc_enable();
-		return $end - $start;
-	}
+    protected static function timeExec(callable $code, $rounds)
+    {
+        $gc_enabled = gc_enabled();
+        if ($gc_enabled) {
+            gc_disable();
+        }
+        $start = microtime(true);
+        for ($i = 0; $i < $rounds; $i++) {
+            $code();
+        }
+        $end = microtime(true);
+        if ($gc_enabled) {
+            gc_enable();
+        }
+        return $end - $start;
+    }
 
-	public function __construct($code, $setup = NULL) {
-		$this->code = (is_callable($code) ?
-		               $code : function() use ($code) { eval("$code;"); });
-		$this->setup = ($setup === NULL || is_callable($setup) ?
-		                $setup : function()  use ($setup) { eval("$setup;"); });
+    public function __construct($code, $setup = null)
+    {
+        $this->code = (is_callable($code) ?
+                       $code : function () use ($code) {
+                        eval("$code;");
+                       });
+        $this->setup = ($setup === null || is_callable($setup) ?
+                        $setup : function () use ($setup) {
+                            eval("$setup;");
+                        });
 
-		if (static::$loopOverhead === NULL) {
-			static::initLoopOverhead();
-		}
-	}
+        if (static::$loopOverhead === null) {
+            static::initLoopOverhead();
+        }
+    }
 
-	public function timeit($rounds = NULL)
-	{
-		$true_rounds = $rounds ? $rounds : 10;
+    public function timeit($rounds = null)
+    {
+        $true_rounds = $rounds ? $rounds : 10;
 
-		$delta = 0;
+        $delta = 0;
 
-		if ($this->setup) {
-			$code = $this->setup;
-			$code();
-		}
+        if ($this->setup) {
+            $code = $this->setup;
+            $code();
+        }
 
-		$code = $this->code;
+        $code = $this->code;
 
-		while ($true_rounds < 1e7)
-		{
-			$delta += max(1e-6,
-			              static::timeExec($code, $true_rounds)
-			              - ($true_rounds * static::$loopOverhead));
-			if ($rounds || $delta > 0.5)
-				break;
-			$true_rounds *= 10;
-		}
+        while ($true_rounds < 1e7) {
+            $delta += max(
+                1e-6,
+                static::timeExec($code, $true_rounds)
+                          - ($true_rounds * static::$loopOverhead)
+            );
+            if ($rounds || $delta > 0.5) {
+                break;
+            }
+            $true_rounds *= 10;
+        }
 
-		$time = $delta / $true_rounds;
+        $time = $delta / $true_rounds;
 
-		if ($time > 1)
-			$delta_str = sprintf("%.2fs", $time);
-		else if ($time > 1e-3)
-			$delta_str = sprintf("%.2fms", $time * 1e3);
-		else
-			$delta_str = sprintf("%.2fus", $time * 1e6);
+        if ($time > 1) {
+            $delta_str = sprintf("%.2fs", $time);
+        } elseif ($time > 1e-3) {
+            $delta_str = sprintf("%.2fms", $time * 1e3);
+        } else {
+            $delta_str = sprintf("%.2fus", $time * 1e6);
+        }
 
-		return [$true_rounds, $time, $delta_str];
-	}
+        return [$true_rounds, $time, $delta_str];
+    }
 
-	public function repeat($rounds = NULL, $repeat = 3) {
-		$results = [];
+    public function repeat($rounds = null, $repeat = 3)
+    {
+        $results = [];
 
-		while ($repeat--) {
-			$results[] = $this->timeit($rounds);
-			if (!$rounds) {
-				// Use the same number of rounds in the remaining
-				// repetitions.
-				$rounds = $results[0][0];
-			}
-		}
+        while ($repeat--) {
+            $results[] = $this->timeit($rounds);
+            if (!$rounds) {
+                // Use the same number of rounds in the remaining
+                // repetitions.
+                $rounds = $results[0][0];
+            }
+        }
 
-		usort($results,
-			  function($a, $b) {
-				  return ($a[1] == $b[1] ?
-						  0 :
-						  ($a[1] < $b[1] ? -1 : 1));
-			  });
+        usort(
+            $results,
+            function ($a, $b) {
+                    return ($a[1] == $b[1] ?
+                          0 :
+                          ($a[1] < $b[1] ? -1 : 1));
+            }
+        );
 
-		return $results;
-	}
+        return $results;
+    }
 }
